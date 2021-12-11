@@ -26,62 +26,65 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> login(Map formValues) async {
     //formValues['name']
     //print(formValues);
-    var url = 'https://api.codingthailand.com/api/login';
+    var url = 'http://localhost/nt/cctv_web_api/api/login/restful';
     var response = await http.post(Uri.parse(url),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
           "email": formValues['email'],
           "password": formValues['password']
         }));
-    if (response.statusCode == 200) {
-      Map<String, dynamic> token = json.decode(response.body);
 
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('token', response.body);
+    Map<String, dynamic> err = json.decode(response.body);
+    // print(err);
+    Alert(
+      context: context,
+      title: "แจ้งเตือน",
+      desc: '${err['message']}',
+      buttons: [
+        DialogButton(
+          child: Text(
+            "ปิด",
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
+          onPressed: () => Navigator.pop(context),
+          gradient: LinearGradient(colors: [
+            Color.fromRGBO(116, 116, 191, 1.0),
+            Color.fromRGBO(52, 138, 199, 1.0),
+          ]),
+        )
+      ],
+    )..show();
 
-      //get Profile
-      var profileUrl = 'https://api.codingthailand.com/api/profile';
-      var responseProfile = await http.get(Uri.parse(profileUrl),
-          headers: {'Authorization': 'Bearer ${token['access_token']}'});
-      Map<String, dynamic> profile = json.decode(responseProfile.body);
-      var user = profile['data']['user']; // { id: 111, name: john ....}
-      await prefs.setString('profile', json.encode(user));
-      // print('profile: $user');
+    // if (response.statusCode == 200) {
+    //   Map<String, dynamic> token = json.decode(response.body);
 
-      //กลับไปที่หน้า HomeStack
-      Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
-    } else {
-      Map<String, dynamic> err = json.decode(response.body);
-      // print(err);
-      Alert(
-        context: context,
-        title: "แจ้งเตือน",
-        desc: '${err['message']}',
-        buttons: [
-          DialogButton(
-            child: Text(
-              "ปิด",
-              style: TextStyle(color: Colors.white, fontSize: 18),
-            ),
-            onPressed: () => Navigator.pop(context),
-            gradient: LinearGradient(colors: [
-              Color.fromRGBO(116, 116, 191, 1.0),
-              Color.fromRGBO(52, 138, 199, 1.0),
-            ]),
-          )
-        ],
-      )..show();
-      // Flushbar(
-      //   message: '${err['message']}',
-      //   icon: Icon(
-      //     Icons.info_outline,
-      //     size: 28.0,
-      //     color: Colors.red,
-      //   ),
-      //   duration: Duration(seconds: 3),
-      //   leftBarIndicatorColor: Colors.red,
-      // )..show(context);
-    }
+    //   SharedPreferences prefs = await SharedPreferences.getInstance();
+    //   await prefs.setString('token', response.body);
+
+    //   //get Profile
+    //   var profileUrl = 'https://api.codingthailand.com/api/profile';
+    //   var responseProfile = await http.get(Uri.parse(profileUrl),
+    //       headers: {'Authorization': 'Bearer ${token['access_token']}'});
+    //   Map<String, dynamic> profile = json.decode(responseProfile.body);
+    //   var user = profile['data']['user']; // { id: 111, name: john ....}
+    //   await prefs.setString('profile', json.encode(user));
+    //   // print('profile: $user');
+
+    //   //กลับไปที่หน้า HomeStack
+    //   Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+    // } else {
+
+    //   // Flushbar(
+    //   //   message: '${err['message']}',
+    //   //   icon: Icon(
+    //   //     Icons.info_outline,
+    //   //     size: 28.0,
+    //   //     color: Colors.red,
+    //   //   ),
+    //   //   duration: Duration(seconds: 3),
+    //   //   leftBarIndicatorColor: Colors.red,
+    //   // )..show(context);
+    // }
   }
 
   @override
