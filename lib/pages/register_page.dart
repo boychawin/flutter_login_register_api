@@ -5,6 +5,7 @@ import 'dart:convert';
 //alert
 import 'package:flutter/cupertino.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 
 class RegisterPage extends StatefulWidget {
   RegisterPage({Key? key}) : super(key: key);
@@ -18,88 +19,71 @@ class _RegisterPageState extends State<RegisterPage> {
   Future<void> register(Map formValues) async {
     //formValues['name']
     //print(formValues);
-    var url = 'http://localhost/nt/cctv_web_api/api/register/restful';
-    var response = await http.post(Uri.parse(url),
-        headers: {'Content-Type': 'application/json'},
-        body: json.encode({
-          "firstname": formValues['firstname'],
-          "lastname": formValues['lastname'],
-          "email": formValues['email'],
-          "password": formValues['password']
-        }));
-    print(response);
+    try {
+      var url = 'http://localhost/nt/cctv_web_api/api/register/restful';
+      var response = await http.post(Uri.parse(url),
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode({
+            "firstname": formValues['firstname'],
+            "lastname": formValues['lastname'],
+            "email": formValues['email'],
+            "password": formValues['password']
+          }));
+      print(response);
 
-    if (response.statusCode == 201) {
-      Map<String, dynamic> feedback = json.decode(response.body);
+      if (response.statusCode == 201) {
+        Map<String, dynamic> feedback = json.decode(response.body);
 
-      Alert(
-        context: context,
-        title: "แจ้งเตือน",
-        desc: '${feedback['data']}',
-        buttons: [
-          DialogButton(
-            child: Text(
-              "ปิด",
-              style: TextStyle(color: Colors.white, fontSize: 18),
-            ),
-            onPressed: () => Navigator.pop(context),
-            gradient: LinearGradient(colors: [
-              Color.fromRGBO(116, 116, 191, 1.0),
-              Color.fromRGBO(52, 138, 199, 1.0),
-            ]),
-          )
-        ],
-      )..show();
+        Alert(
+          context: context,
+          // title: "แจ้งเตือน",
+          type: AlertType.success,
+          desc: '${feedback['data']}',
+          buttons: [
+            DialogButton(
+              child: Text(
+                "ปิด",
+                style: TextStyle(color: Colors.white, fontSize: 18),
+              ),
+              onPressed: () => Navigator.pop(context),
+              gradient: LinearGradient(colors: [
+                Color.fromRGBO(116, 116, 191, 1.0),
+                Color.fromRGBO(52, 138, 199, 1.0),
+              ]),
+            )
+          ],
+        )..show();
 
-      //print(feedback['message']);
-      // Flushbar(
-      //   message: '${feedback['message']}',
-      //   icon: Icon(
-      //     Icons.info_outline,
-      //     size: 28.0,
-      //     color: Colors.green,
-      //   ),
-      //   duration: Duration(seconds: 3),
-      //   leftBarIndicatorColor: Colors.green,
-      // )..show(context);
+        //กลับไปที่หน้า LoginPage
+        Future.delayed(Duration(seconds: 3), () {
+          Navigator.pop(context);
+        });
+      } else {
+        Map<String, dynamic> err = json.decode(response.body);
+        //print(err['errors']['email'][0]);
 
-      //กลับไปที่หน้า LoginPage
-      Future.delayed(Duration(seconds: 3), () {
-        Navigator.pop(context);
-      });
-    } else {
-      Map<String, dynamic> err = json.decode(response.body);
-      //print(err['errors']['email'][0]);
-
-      Alert(
-        context: context,
-        title: "แจ้งเตือน",
-        desc: '${err['data']}',
-        buttons: [
-          DialogButton(
-            child: Text(
-              "ปิด",
-              style: TextStyle(color: Colors.white, fontSize: 18),
-            ),
-            onPressed: () => Navigator.pop(context),
-            gradient: LinearGradient(colors: [
-              Color.fromRGBO(116, 116, 191, 1.0),
-              Color.fromRGBO(52, 138, 199, 1.0),
-            ]),
-          )
-        ],
-      )..show();
-
-      // Flushbar(
-      //   message: '${err['errors']['email'][0]}',
-      //   icon: Icon(
-      //     Icons.info_outline,
-      //     size: 28.0,
-      //     color: Colors.red,
-      //   ),
-      //   duration: Duration(seconds: 3),
-      //   leftBarIndicatorColor: Colors.red,
-      // )..show(context);
+        Alert(
+          context: context,
+          type: AlertType.warning,
+          // title: "แจ้งเตือน",
+          desc: '${err['data']}',
+          buttons: [
+            DialogButton(
+              child: Text(
+                "ปิด",
+                style: TextStyle(color: Colors.white, fontSize: 18),
+              ),
+              onPressed: () => Navigator.pop(context),
+              gradient: LinearGradient(colors: [
+                Color.fromRGBO(116, 116, 191, 1.0),
+                Color.fromRGBO(52, 138, 199, 1.0),
+              ]),
+            )
+          ],
+        )..show();
+      }
+    } catch (e) {
+      print(e);
     }
   }
 
@@ -144,10 +128,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                 borderRadius: BorderRadius.circular(10)),
                             errorStyle:
                                 TextStyle(backgroundColor: Colors.white)),
-                        // validators: [
-                        //   FormBuilderValidators.required(
-                        //       errorText: 'ป้อนข้อมูลชื่อสกุลด้วย'),
-                        // ],
+                        validator: MultiValidator([
+                          RequiredValidator(errorText: "ป้อนข้อมูลชื่อด้วย"),
+                        ]),
                       ),
                       SizedBox(height: 20),
                       FormBuilderTextField(
@@ -162,10 +145,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                 borderRadius: BorderRadius.circular(10)),
                             errorStyle:
                                 TextStyle(backgroundColor: Colors.white)),
-                        // validators: [
-                        //   FormBuilderValidators.required(
-                        //       errorText: 'ป้อนข้อมูลชื่อสกุลด้วย'),
-                        // ],
+                        validator: MultiValidator([
+                          RequiredValidator(errorText: "ป้อนข้อมูลสกุลด้วย"),
+                        ]),
                       ),
                       SizedBox(height: 20),
                       FormBuilderTextField(
@@ -180,12 +162,10 @@ class _RegisterPageState extends State<RegisterPage> {
                                 borderRadius: BorderRadius.circular(10)),
                             errorStyle:
                                 TextStyle(backgroundColor: Colors.white)),
-                        // validators: [
-                        //   FormBuilderValidators.required(
-                        //       errorText: 'ป้อนข้อมูลอีเมล์ด้วย'),
-                        //   FormBuilderValidators.email(
-                        //       errorText: 'รูปแบบอีเมล์ไม่ถูกต้อง'),
-                        // ],
+                        validator: MultiValidator([
+                          RequiredValidator(errorText: "ป้อนข้อมูลอีเมล์ด้วย"),
+                          EmailValidator(errorText: "รูปแบบอีเมล์ไม่ถูกต้อง"),
+                        ]),
                       ),
                       SizedBox(height: 20),
                       FormBuilderTextField(
@@ -201,12 +181,12 @@ class _RegisterPageState extends State<RegisterPage> {
                                 borderRadius: BorderRadius.circular(10)),
                             errorStyle:
                                 TextStyle(backgroundColor: Colors.white)),
-                        // validators: [
-                        //   FormBuilderValidators.required(
-                        //       errorText: 'ป้อนข้อมูลรหัสผ่านด้วย'),
-                        //   FormBuilderValidators.minLength(3,
-                        //       errorText: 'รหัสผ่านต้อง 3 ตัวอักษรขึ้นไป')
-                        // ],
+                        validator: MultiValidator([
+                          RequiredValidator(
+                              errorText: "ป้อนข้อมูลรหัสผ่านด้วย"),
+                          MinLengthValidator(6,
+                              errorText: "รหัสผ่านต้อง 6 ตัวอักษรขึ้นไป"),
+                        ]),
                       ),
                     ],
                   ),
@@ -231,20 +211,6 @@ class _RegisterPageState extends State<RegisterPage> {
                         }
                       },
                     ),
-                    // MaterialButton(
-                    //   padding: EdgeInsets.all(20),
-                    //   color: Colors.pink,
-                    //   // minWidth: 100,
-                    //   // height: 20,
-                    //   textColor: Colors.white,
-                    //   shape: RoundedRectangleBorder(
-                    //       borderRadius: BorderRadius.circular(20)),
-                    //   child: Text("ย้อนกลับ"),
-                    //   onPressed: () {
-                    //     // _fbKey.currentState.reset();
-                    //     Navigator.pop(context);
-                    //   },
-                    // ),
                     Expanded(
                       child: FlatButton(
                         child: Text("ย้อนกลับ",

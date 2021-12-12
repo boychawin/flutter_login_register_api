@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/pages/home_stack/home_stack.dart';
 import 'package:flutter_application_1/pages/login_page.dart';
 import 'package:flutter_application_1/pages/register_page.dart';
 //redux
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
-void main() {
+String? token;
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  token = prefs.getString('token');
+
   runApp(const MyApp());
 }
 
@@ -32,9 +39,9 @@ class MyApp extends StatelessWidget {
       // home: MyHomePage(title: 'Flutter TOT'),
       initialRoute: '/',
       routes: {
-        '/': (context) => LoginPage(),
-        // '/': (context) => token == null ? LoginPage() : HomeStack(),
-        // '/homestack': (context) => HomeStack(),
+        // '/': (context) => LoginPage(),
+        '/': (context) => token == null ? LoginPage() : HomeStack(),
+        '/homestack': (context) => HomeStack(),
         // '/productstack': (context) => ProductStack(),
         '/register': (context) => RegisterPage(),
         '/login': (context) => LoginPage()
