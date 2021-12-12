@@ -5,16 +5,34 @@ import 'package:flutter_application_1/widgets/menu.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key}) : super(key: key);
+import 'package:redux/redux.dart';
 
+class MyHomePage extends StatefulWidget {
+  MyHomePage({Key? key, this.title}) : super(key: key);
+  final String? title;
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  late Map<String, dynamic> profile;
+  @override
+  void initState() {
+    super.initState();
+    getProfile();
+  }
 
-  
+  Future<void> getProfile() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      profile = json.decode(prefs.getString('profile')!);
+    });
+    // var newProfile = json.decode(prefs.getString('profile'));
+    // //call redux action
+    // final store = StoreProvider.of<AppState>(context);
+    // store.dispatch(updateProfileAction(newProfile));
+  }
+
   Future<void> logout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('token');
