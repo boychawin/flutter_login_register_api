@@ -1,11 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/redux/app_reducer.dart';
 import 'package:flutter_application_1/widgets/menu.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:redux/redux.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key, this.title}) : super(key: key);
@@ -16,22 +18,21 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   late Map<String, dynamic> profile;
-  @override
-  void initState() {
-    super.initState();
-    getProfile();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   // getProfile();
+  // }
 
-  Future<void> getProfile() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      profile = json.decode(prefs.getString('profile')!);
-    });
-    // var newProfile = json.decode(prefs.getString('profile'));
-    // //call redux action
-    // final store = StoreProvider.of<AppState>(context);
-    // store.dispatch(updateProfileAction(newProfile));
-  }
+  // Future<void> getProfile() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   // var newProfile = json.decode(prefs.getString('profile'));
+  //   // //call redux action
+  //   // final store = StoreProvider.of<AppState>(context);
+  //   // store.dispatch(updateProfileAction(newProfile));
+
+  //   print(prefs);
+  // }
 
   Future<void> logout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -65,24 +66,24 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: Column(
           children: [
-            // Expanded(
-            //   flex: isPortrait ? 1 : 3 ,
-            //     child: Center(
-            //     child: StoreConnector<AppState, Map<String, dynamic>>(
-            //             distinct: true,
-            //             converter: (store) => store.state.profileState.profile,
-            //             builder: (context, profile) {
-            //               return Column(
-            //                   mainAxisAlignment: MainAxisAlignment.center,
-            //                   children: [
-            //                     Text('สวัสดีคุณ ${profile['name']}'),
-            //                     Text('Email: ${profile['email']} Role: ${profile['role']}')
-            //                   ],
-            //               );
-            //             },
-            //           ),
-            //       )
-            //   ),
+            Expanded(
+                flex: isPortrait ? 1 : 3,
+                child: Center(
+                  child: StoreConnector<AppState, Map<String, dynamic>>(
+                    distinct: true,
+                    converter: (store) => store.state.profileState.profile,
+                    builder: (context, profile) {
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('สวัสดีคุณ ${profile}'),
+                          Text(
+                              'Email: ${profile['user_email']} Role: ${profile['user_email']}')
+                        ],
+                      );
+                    },
+                  ),
+                )),
             Expanded(
               flex: isPortrait ? 8 : 9,
               child: GridView.count(

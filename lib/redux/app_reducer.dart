@@ -6,7 +6,7 @@ import 'package:meta/meta.dart';
 class AppState {
   final ProfileState profileState;
 
-  AppState({
+  const AppState({
     required this.profileState
   });
 

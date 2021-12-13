@@ -50,10 +50,11 @@ class _LoginPageState extends State<LoginPage> {
         Map<String, dynamic> profile = json.decode(responseProfile.body);
         var user = profile['data']['user']; // { id: 111, name: john ....}
         await prefs.setString('profile', json.encode(user));
-        // print('profile: $user');
+        print('profile: $user');
 
         //กลับไปที่หน้า HomeStack
-        Navigator.pushNamedAndRemoveUntil(context, '/homestack', (route) => false);
+        Navigator.pushNamedAndRemoveUntil(
+            context, '/homestack', (route) => false);
       } else {
         // print(err);
         Alert(
