@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
   // MyApp({this.store}); //this.store = myStore;
   // MyApp({Key? key, required this.store}) : super(key: key);
 
-  MyApp({
+  const MyApp({
     Key? key,
     required this.store,
   }) : super(key: key);
@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
               primarySwatch: Colors.blue,
               // primaryColor: Color(0xff00b0ff),
               canvasColor: Colors.blue[50],
-              accentColor: Colors.orange,
+              // accentColor: Colors.orange,
               visualDensity: VisualDensity.adaptivePlatformDensity,
               textTheme: TextTheme(
                 headline1: TextStyle(

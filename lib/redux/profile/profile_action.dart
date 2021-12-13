@@ -6,7 +6,7 @@ import 'package:meta/meta.dart';
 class ProfileAction {
   final ProfileState profileState;
 
-  ProfileAction(this.profileState);
+  const ProfileAction(this.profileState);
 }
 
 //action

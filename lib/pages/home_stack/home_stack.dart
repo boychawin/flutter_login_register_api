@@ -15,13 +15,13 @@ class HomeStack extends StatelessWidget {
         WidgetBuilder builder;
         switch (settings.name) {
           case 'homestack/home':
-            builder = (BuildContext _) => MyHomePage();
+            builder = (BuildContext _) => const MyHomePage();
             break;
           case 'homestack/about':
-            builder = (BuildContext _) => AboutPage();
+            builder = (BuildContext _) => const AboutPage();
             break;
           case 'homestack/map':
-            builder = (BuildContext _) => MapPage();
+            builder = (BuildContext _) => const MapPage();
             break;
           default:
             throw Exception('Invalid route: ${settings.name}');

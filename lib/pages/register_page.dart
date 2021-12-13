@@ -8,7 +8,7 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 
 class RegisterPage extends StatefulWidget {
-  RegisterPage({Key? key}) : super(key: key);
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
   _RegisterPageState createState() => _RegisterPageState();
@@ -29,7 +29,7 @@ class _RegisterPageState extends State<RegisterPage> {
             "email": formValues['email'],
             "password": formValues['password']
           }));
-      print(response);
+      // print(response);
 
       if (response.statusCode == 201) {
         Map<String, dynamic> feedback = json.decode(response.body);
@@ -41,21 +41,21 @@ class _RegisterPageState extends State<RegisterPage> {
           desc: '${feedback['data']}',
           buttons: [
             DialogButton(
-              child: Text(
+              child: const Text(
                 "ปิด",
                 style: TextStyle(color: Colors.white, fontSize: 18),
               ),
               onPressed: () => Navigator.pop(context),
-              gradient: LinearGradient(colors: [
+              gradient: const LinearGradient(colors: [
                 Color.fromRGBO(116, 116, 191, 1.0),
                 Color.fromRGBO(52, 138, 199, 1.0),
               ]),
             )
           ],
-        )..show();
+        ).show();
 
         //กลับไปที่หน้า LoginPage
-        Future.delayed(Duration(seconds: 3), () {
+        Future.delayed(const Duration(seconds: 3), () {
           Navigator.pop(context);
         });
       } else {
@@ -69,21 +69,21 @@ class _RegisterPageState extends State<RegisterPage> {
           desc: '${err['data']}',
           buttons: [
             DialogButton(
-              child: Text(
+              child: const Text(
                 "ปิด",
                 style: TextStyle(color: Colors.white, fontSize: 18),
               ),
               onPressed: () => Navigator.pop(context),
-              gradient: LinearGradient(colors: [
+              gradient: const LinearGradient(colors: [
                 Color.fromRGBO(116, 116, 191, 1.0),
                 Color.fromRGBO(52, 138, 199, 1.0),
               ]),
             )
           ],
-        )..show();
+        ).show();
       }
     } catch (e) {
-      print(e);
+      // print(e);
     }
   }
 
@@ -91,7 +91,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           gradient: LinearGradient(
               colors: [Colors.deepPurple, Colors.lightBlue],
               begin: Alignment.topRight,
@@ -99,14 +99,14 @@ class _RegisterPageState extends State<RegisterPage> {
       child: Center(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.all(40),
+            padding: const EdgeInsets.all(40),
             child: Column(
               children: [
-                Text('ลงทะเบียน', style: TextStyle(fontSize: 40)),
-                SizedBox(height: 40),
+                const Text('ลงทะเบียน', style: TextStyle(fontSize: 40)),
+                const SizedBox(height: 40),
                 FormBuilder(
                   key: _fbKey,
-                  initialValue: {
+                  initialValue: const {
                     'firstname': '',
                     'lastname': '',
                     'email': '',
@@ -127,12 +127,12 @@ class _RegisterPageState extends State<RegisterPage> {
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10)),
                             errorStyle:
-                                TextStyle(backgroundColor: Colors.white)),
+                                const TextStyle(backgroundColor: Colors.white)),
                         validator: MultiValidator([
                           RequiredValidator(errorText: "ป้อนข้อมูลชื่อด้วย"),
                         ]),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       FormBuilderTextField(
                         name: "lastname",
                         maxLines: 1,
@@ -144,12 +144,12 @@ class _RegisterPageState extends State<RegisterPage> {
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10)),
                             errorStyle:
-                                TextStyle(backgroundColor: Colors.white)),
+                                const TextStyle(backgroundColor: Colors.white)),
                         validator: MultiValidator([
                           RequiredValidator(errorText: "ป้อนข้อมูลสกุลด้วย"),
                         ]),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       FormBuilderTextField(
                         name: "email",
                         maxLines: 1,
@@ -161,13 +161,13 @@ class _RegisterPageState extends State<RegisterPage> {
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10)),
                             errorStyle:
-                                TextStyle(backgroundColor: Colors.white)),
+                                const TextStyle(backgroundColor: Colors.white)),
                         validator: MultiValidator([
                           RequiredValidator(errorText: "ป้อนข้อมูลอีเมล์ด้วย"),
                           EmailValidator(errorText: "รูปแบบอีเมล์ไม่ถูกต้อง"),
                         ]),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       FormBuilderTextField(
                         name: "password",
                         maxLines: 1,
@@ -180,7 +180,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10)),
                             errorStyle:
-                                TextStyle(backgroundColor: Colors.white)),
+                                const TextStyle(backgroundColor: Colors.white)),
                         validator: MultiValidator([
                           RequiredValidator(
                               errorText: "ป้อนข้อมูลรหัสผ่านด้วย"),
@@ -191,19 +191,19 @@ class _RegisterPageState extends State<RegisterPage> {
                     ],
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     MaterialButton(
-                      padding: EdgeInsets.all(20),
+                      padding: const EdgeInsets.all(20),
                       color: Colors.orange,
                       // minWidth: 100,
                       // height: 20,
                       textColor: Colors.white,
                       shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10))),
-                      child: Text("ลงทะเบียน"),
+                      child: const Text("ลงทะเบียน"),
                       onPressed: () {
                         if (_fbKey.currentState!.saveAndValidate()) {
                           // print(_fbKey.currentState.value);
@@ -213,7 +213,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     Expanded(
                       child: FlatButton(
-                        child: Text("ย้อนกลับ",
+                        child: const Text("ย้อนกลับ",
                             style: TextStyle(
                                 decoration: TextDecoration.underline)),
                         textColor: Colors.white,

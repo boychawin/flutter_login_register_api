@@ -1,4 +1,4 @@
-import 'dart:convert';
+// import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/redux/app_reducer.dart';
@@ -6,11 +6,11 @@ import 'package:flutter_application_1/widgets/menu.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:flutter_redux/flutter_redux.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, this.title}) : super(key: key);
+  const MyHomePage({Key? key, this.title}) : super(key: key);
   final String? title;
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -58,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
             //   onPressed: null
             // ),
             IconButton(
-                icon: Icon(Icons.exit_to_app, color: Colors.white, size: 35),
+                icon: const Icon(Icons.exit_to_app, color: Colors.white, size: 35),
                 onPressed: () {
                   logout();
                 }),
@@ -101,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       padding: const EdgeInsets.all(8),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
+                        children: const [
                           Icon(Icons.person, size: 80, color: Colors.blue),
                           Text('เกี่ยวกับ',
                               style:
@@ -120,7 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
+                      children: const [
                         Icon(Icons.map_rounded, size: 80, color: Colors.blue),
                         Text('แผนที่',
                             style: TextStyle(fontSize: 20, color: Colors.blue))

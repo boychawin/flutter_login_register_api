@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class DetailPage extends StatefulWidget {
-  DetailPage({Key? key}) : super(key: key);
+  const DetailPage({Key? key}) : super(key: key);
 
   @override
   _DetailPageState createState() => _DetailPageState();

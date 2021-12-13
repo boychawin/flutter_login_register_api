@@ -5,6 +5,6 @@ class Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text('TOT 2020', style: TextStyle(color: Colors.red));
+    return const Text('TOT 2020', style: TextStyle(color: Colors.red));
   }
 }

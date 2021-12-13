@@ -11,7 +11,7 @@ class AppState {
   });
 
   factory AppState.initial() {
-    return AppState(
+    return const AppState(
       profileState: ProfileState()
     );
   }

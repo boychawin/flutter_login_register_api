@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ProductStack extends StatefulWidget {
-  ProductStack({Key? key}) : super(key: key);
+  const ProductStack({Key? key}) : super(key: key);
 
   @override
   _ProductStackState createState() => _ProductStackState();

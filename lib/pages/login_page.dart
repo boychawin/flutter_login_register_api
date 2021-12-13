@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:form_builder_validators/form_builder_validators.dart';
+// import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 //alert
@@ -10,7 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({Key? key}) : super(key: key);
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -20,7 +20,7 @@ class _LoginPageState extends State<LoginPage> {
   // final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
   final _fbKey = GlobalKey<FormBuilderState>();
 
-  var FormBuilderValidators;
+  // var FormBuilderValidators;
   var _emailError;
 
   Future<void> login(Map formValues) async {
@@ -50,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
         Map<String, dynamic> profile = json.decode(responseProfile.body);
         var user = profile['data']['user']; // { id: 111, name: john ....}
         await prefs.setString('profile', json.encode(user));
-        print('profile: $user');
+        // print('profile: $user');
 
         //กลับไปที่หน้า HomeStack
         Navigator.pushNamedAndRemoveUntil(
@@ -64,18 +64,18 @@ class _LoginPageState extends State<LoginPage> {
           desc: '${err['message']}',
           buttons: [
             DialogButton(
-              child: Text(
+              child: const Text(
                 "ปิด",
                 style: TextStyle(color: Colors.white, fontSize: 18),
               ),
               onPressed: () => Navigator.pop(context),
-              gradient: LinearGradient(colors: [
+              gradient: const LinearGradient(colors: [
                 Color.fromRGBO(116, 116, 191, 1.0),
                 Color.fromRGBO(52, 138, 199, 1.0),
               ]),
             )
           ],
-        )..show();
+        ).show();
       }
     } catch (e) {
       print(e);
@@ -86,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           gradient: LinearGradient(
               colors: [Colors.deepPurple, Colors.lightBlue],
               begin: Alignment.topRight,
@@ -94,14 +94,14 @@ class _LoginPageState extends State<LoginPage> {
       child: Center(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.all(40),
+            padding: const EdgeInsets.all(40),
             child: Column(
               children: [
-                FlutterLogo(size: 80),
-                SizedBox(height: 40),
+                const FlutterLogo(size: 80),
+                const SizedBox(height: 40),
                 FormBuilder(
                   key: _fbKey,
-                  initialValue: {'email': '', 'password': ''},
+                  initialValue: const {'email': '', 'password': ''},
                   autovalidateMode: AutovalidateMode
                       .always, //ถ้าไม่ใส่ต้อง submit ก่อนถึงจะตรวจสอบ validation
                   child: Column(
@@ -117,13 +117,13 @@ class _LoginPageState extends State<LoginPage> {
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10)),
                             errorStyle:
-                                TextStyle(backgroundColor: Colors.white)),
+                                const TextStyle(backgroundColor: Colors.white)),
                         validator: MultiValidator([
                           RequiredValidator(errorText: "ป้อนข้อมูลอีเมล์ด้วย"),
                           EmailValidator(errorText: "รูปแบบอีเมล์ไม่ถูกต้อง"),
                         ]),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       FormBuilderTextField(
                         name: "password",
                         maxLines: 1,
@@ -137,7 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10)),
                             errorStyle:
-                                TextStyle(backgroundColor: Colors.white)),
+                                const TextStyle(backgroundColor: Colors.white)),
                         validator: MultiValidator([
                           RequiredValidator(
                               errorText: "ป้อนข้อมูลรหัสผ่านด้วย"),
@@ -148,19 +148,19 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Expanded(
                       child: ElevatedButton.icon(
-                        label: Text('เข้าสู่ระบบ'),
-                        icon: Icon(Icons.login_rounded),
+                        label: const Text('เข้าสู่ระบบ'),
+                        icon: const Icon(Icons.login_rounded),
                         style: ElevatedButton.styleFrom(
                           primary: Colors.orange,
                           //side: BorderSide(color: Colors.red, width: 5),
-                          textStyle: TextStyle(fontSize: 15),
-                          padding: EdgeInsets.all(15),
+                          textStyle: const TextStyle(fontSize: 15),
+                          padding: const EdgeInsets.all(15),
                           shape: const RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10))),
@@ -176,7 +176,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     Expanded(
                       child: FlatButton(
-                        child: Text("สมัครสมาชิก",
+                        child: const Text("สมัครสมาชิก",
                             style: TextStyle(
                                 decoration: TextDecoration.underline)),
                         textColor: Colors.white,

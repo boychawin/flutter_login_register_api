@@ -3,7 +3,7 @@ import 'package:flutter_application_1/redux/app_reducer.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 class Menu extends StatefulWidget {
-  Menu({Key? key}) : super(key: key);
+  const Menu({Key? key}) : super(key: key);
 
   @override
   _MenuState createState() => _MenuState();
@@ -20,7 +20,7 @@ class _MenuState extends State<Menu> {
             converter: (store) => store.state.profileState.profile,
             builder: (context, profile) {
               return UserAccountsDrawerHeader(
-                currentAccountPicture: CircleAvatar(
+                currentAccountPicture: const CircleAvatar(
                   backgroundImage: AssetImage('assets/images/logo/logo.png'),
                 ),
                 accountEmail:
@@ -30,18 +30,18 @@ class _MenuState extends State<Menu> {
             },
           ),
           ListTile(
-              leading: Icon(Icons.home),
-              title: Text('หน้าหลัก'),
-              trailing: Icon(Icons.arrow_right),
+              leading: const Icon(Icons.home),
+              title: const Text('หน้าหลัก'),
+              trailing: const Icon(Icons.arrow_right),
               // selected: ModalRoute.of(context).settings.name == 'homestack/home' ? true : false,
               onTap: () {
                 Navigator.of(context, rootNavigator: true)
                     .pushNamedAndRemoveUntil('/homestack', (route) => false);
               }),
           ListTile(
-              leading: Icon(Icons.star),
-              title: Text('สินค้า'),
-              trailing: Icon(Icons.arrow_right),
+              leading: const Icon(Icons.star),
+              title: const Text('สินค้า'),
+              trailing: const Icon(Icons.arrow_right),
               // selected: ModalRoute.of(context).settings.name == 'productstack/product' ? true : false,
               onTap: () {
                 Navigator.of(context, rootNavigator: true)
